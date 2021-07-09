@@ -1,7 +1,8 @@
 // Vanila JS used to target the element we want to update, then replace its HTML with the contents of the 'list' partial.
+
 // Note: any instance variables set in the controller will be available here and in the partial when rendered (ie. @posts),
 // so you don't have to explicitly pass those in as a local variable unless you just want to.
-document.getElementsByClassName('list')[0].innerHTML = '<%= escape_javascript(render "list") %>';
+document.getElementById('list').innerHTML = '<%= escape_javascript(render "list") %>';
 
 //// If using jQuery, you can do this slightly shorter version:
-// $('.list').html('<%= escape_javascript(render "list") %>';
+// $('#list').html('<%= escape_javascript(render "list") %>';
