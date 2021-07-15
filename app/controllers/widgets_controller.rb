@@ -4,7 +4,7 @@ class WidgetsController < ApplicationController
 
   # GET /widgets or /widgets.json
   def index
-    @widgets = Widget.all
+    @widgets = get_widgets
   end
 
   # GET /widgets/1 or /widgets/1.json
@@ -70,5 +70,11 @@ class WidgetsController < ApplicationController
 
     def set_option_id
       params[:widget][:option_id] = params[:widget][:options]&.map(&:to_i)&.sum.to_i
+    end
+
+    def get_widgets
+      return Widget.find_by_option(params[:search]) if params[:search].present?
+
+      Widget.all
     end
 end

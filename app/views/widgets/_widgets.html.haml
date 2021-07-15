@@ -1,0 +1,3 @@
+.title
+  - Widget.option_list.each do |option|
+    = link_to option.to_s.titleize, widgets_path(search: option), remote: true, :'data-no-turbolink' => true
