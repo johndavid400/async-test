@@ -19,7 +19,7 @@ class Widget < ApplicationRecord
   # this should return list of all options as integer array
   def option_ids
     x = option_id
-    enum_values.select{ |n| (x - n) < 0 ? next : x -= n }
+    options_hash_values.select{ |n| (x - n) < 0 ? next : x -= n }
   end
 
   # converts option_ids integers to array of matching names from option_list
