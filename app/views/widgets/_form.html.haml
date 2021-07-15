@@ -1,0 +1,21 @@
+= form_for @widget do |f|
+  - if @widget.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@widget.errors.count, "error")} prohibited this widget from being saved:"
+      %ul
+        - @widget.errors.full_messages.each do |message|
+          %li= message
+
+  .form-group
+    = f.label :name
+    = f.text_field :name
+
+  .form-group
+    = f.label :option_id, "Options: #{@widget.option_id}"
+    - Widget.options_hash.each do |name, id|
+      .div
+        = check_box_tag 'widget[options][]', id, @widget.option_ids.include?(id)
+        = name
+
+  .actions
+    = f.submit 'Save'

@@ -8,4 +8,6 @@ Rails.application.routes.draw do
   get 'kittens' => 'async#index'
   get 'kitten'  => 'async#kitten'
 
+  resources :widgets
+
 end
