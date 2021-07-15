@@ -11,11 +11,14 @@
     = f.text_field :name
 
   .form-group
-    = f.label :option_id, "Options: #{@widget.option_id}"
+    = f.label :option_id, "Options"
     - Widget.options_hash.each do |name, id|
       .div
         = check_box_tag 'widget[options][]', id, @widget.option_ids.include?(id)
-        = name
+        = "#{name} - #{id}"
+  .form-group
+    Option ID:
+    %b= @widget.option_id
 
   .actions
     = f.submit 'Save'
