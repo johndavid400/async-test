@@ -1,64 +1,90 @@
-.form-group
-  %h4 What is this?
-  This model only has 2 fields:
-  %code name:string
-  and
-  %code option_id:integer
-  , but can save a collection of options (multi-select) stored as a single integer.
 
+= link_to "More Details..", "#", id: 'show-info' 
 
-.form-group
-  %h4 Why?
-  Imagine the simplicity of the
-  = link_to 'Rails enum', 'https://api.rubyonrails.org/v5.2.4.4/classes/ActiveRecord/Enum.html', target: '_blank'
-  feature mixed with the flexibility of a
-  = link_to 'Postgres Array string field.', 'https://guides.rubyonrails.org/active_record_postgresql.html#array', target: '_blank'
-  %div I really like the idea of the Rails enum, essentially mapping an integer to a more meaningful string. It seems like the most efficient way to store data in a database.
+:javascript
+  document.getElementById('show-info').addEventListener('click', function(e){
+    e.preventDefault();
+    let el = document.getElementById('info');
+    if (el.style.display == 'block') {
+      el.style.display = 'none';
+    }
+    else {
+      el.style.display = 'block';
+    }
+  });
 
-.form-group
-  %div
-    I have played with ActiveRecord/Postgres arrays, and that is always been an appealing idea when you need to store an array of data but don't really feel that it warrants its own database-table/model.
-  %div
-    My biggest gripe about that is that the Postgres array route requires storing a potentially long string in the database and the queries are just plain wacky:
-  %div
-    %code Book.where("tags @> ARRAY[?]::varchar[]", ["fantasy", "fiction"])
-.form-group
-  %div So I began wondering what it would look like or if it would be possible to represent an array of data as a single integer... this was what I came up with.
+.info{id: 'info', style: 'display: none;'}
+  .form-group
+    %h2 What is this?
+    %div= image_tag('https://media.giphy.com/media/Vy9bLZxNutIlLuNXOZ/giphy.gif')
+  .form-group
+    This model only has 2 fields:
+    %code name:string
+    and
+    %code option_id:integer
+    , but can save a collection of options (multi-select) stored as a single integer.
 
-.form-group
-  %h4 How?
-  %div
-    I got the idea while thinking about
-    = link_to 'unix permissions', 'http://permissions-calculator.org/', target: '_blank'
-    where each permission type is assigned a number (read => 1, write => 2, execute => 4), and combining those numbers gives you the flexibility to represent any permission type you want with a single digit (r=read, w=write, x=execute): 1=r, 2=w, 3=rw, 4=x, 5=rx, 6=wx, 7=rwx. This made me realize that if you scaled that out, you could add as many options as you wanted and still have just one integer representation.
-.form-group
-  %div So we can provide a list of options, then dynamically calculate the integer value for each one in the array by doubling the previous value. Also added in some methods to query by an option (click one of the Fruit name filters above) and a method to convert a given integer into the list of options.
-.form-group
-  %div You can add any combination of these integer values to form a unique single integer value that represents a specific collection.
+  %hr
+  .form-group
+    %h2 Why?
+    %div= image_tag('https://media.giphy.com/media/X4YqmJEl6wJoY/giphy.gif')
+  .form-group
+    Imagine the simplicity of the
+    = link_to 'Rails enum', 'https://api.rubyonrails.org/v5.2.4.4/classes/ActiveRecord/Enum.html', target: '_blank'
+    feature mixed with the flexibility of a
+    = link_to 'Postgres Array string field.', 'https://guides.rubyonrails.org/active_record_postgresql.html#array', target: '_blank'
+    %div I really like the idea of the Rails enum, essentially mapping an integer to a more meaningful string. It seems like the most efficient way to store data in a database.
 
-.form-group
-  Click here to see all of the
-  = link_to "#{Widget.test.count - 1} possible combinations", possibilities_path, target: '_blank'
-  for the
-  = Widget::OPTIONS.count
-  options available and the number that represents each.
+  .form-group
+    %div
+      I have played with ActiveRecord/Postgres arrays, and that is always been an appealing idea when you need to store an array of data but don't really feel that it warrants its own database-table/model.
+    %div
+      My biggest gripe about that is that the Postgres array route requires storing a potentially long string in the database and the queries are just plain wacky:
+    %div
+      %code Book.where("tags @> ARRAY[?]::varchar[]", ["fantasy", "fiction"])
+  .form-group
+    %div So I began wondering what it would look like or if it would be possible to represent an array of data as a single integer... this was what I came up with.
 
-.form-group
-  %h4 Disclaimer:
-  This is merely a proof of concept.
-  %div There are likely reasons why you wouldn't want to do this on a production app and I haven't thought through all the pros/cons, but it was such a neat idea and I wanted to play with it.
-.form-group
-  %div
-    This is the entire Widget model:
-    %code
-      %pre
-        %div= 'class Widget < ApplicationRecord'
-        %div= '  # Setup option names'
-        %div= '  OPTIONS = [:apples, :bananas, :blueberries, :coconuts, :grapes, :lemons, :peaches, :raspberries, :strawberries, :watermelons, :cherries].freeze'
-        %div= '  include MultiEnum'
-        %div= 'end'
-    = link_to 'Here is the relevant code', 'https://github.com/johndavid400/async-test/blob/master/app/models/concerns/multi_enum.rb', target: '_blank'
-    if you are interested (about 50 lines of ruby).
+  %hr
+  .form-group
+    %h2 How?
+    %div= image_tag('https://media.giphy.com/media/10yIEN8cMn4i9W/giphy-downsized.gif')
+  .form-group
+    %div
+      I got the idea while thinking about
+      = link_to 'unix permissions', 'http://permissions-calculator.org/', target: '_blank'
+      where each permission type is assigned a number (read => 1, write => 2, execute => 4), and combining those numbers gives you the flexibility to represent any permission type you want with a single digit (r=read, w=write, x=execute): 1=r, 2=w, 3=rw, 4=x, 5=rx, 6=wx, 7=rwx. This made me realize that if you scaled that out, you could add as many options as you wanted and still have just one integer representation.
+  .form-group
+    %div So we can provide a list of options, then dynamically calculate the integer value for each one in the array by doubling the previous value. Also added in some methods to query by an option (click one of the Fruit name filters above) and a method to convert a given integer into the list of options.
+  .form-group
+    %div You can add any combination of these integer values to form a unique single integer value that represents a specific collection.
 
-.form-group
-  The values of each option are shown next to their name in the filters and on the edit page.
+  .form-group
+    Click here to see all of the
+    = link_to "#{Widget.test.count - 1} possible combinations", possibilities_path, target: '_blank'
+    for the
+    = Widget::OPTIONS.count
+    options available and the number that represents each.
+
+  %hr
+  .form-group
+    %h2 Disclaimer:
+    %div= image_tag('https://media.giphy.com/media/l0Iy8N8khDX5AElgI/giphy-downsized.gif')
+  .form-group
+    This is merely a proof of concept.
+    %div There are likely reasons why you wouldn't want to do this on a production app and I haven't thought through all the pros/cons, but it was such a neat idea and I wanted to play with it.
+  .form-group
+    %div
+      This is the entire Widget model:
+      %code
+        %pre
+          %div= 'class Widget < ApplicationRecord'
+          %div= '  # Setup option names'
+          %div= '  OPTIONS = [:apples, :bananas, :blueberries, :coconuts, :grapes, :lemons, :peaches, :raspberries, :strawberries, :watermelons, :cherries].freeze'
+          %div= '  include MultiEnum'
+          %div= 'end'
+      = link_to 'Here is the relevant code', 'https://github.com/johndavid400/async-test/blob/master/app/models/concerns/multi_enum.rb', target: '_blank'
+      if you are interested (about 50 lines of ruby).
+
+  .form-group
+    The values of each option are shown next to their name in the filters and on the edit page.
