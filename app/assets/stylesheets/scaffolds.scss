@@ -6,7 +6,11 @@ body {
 body, p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
-  line-height: 18px; }
+  line-height: 18px;
+  code {
+    line-height: 14px;
+  }
+}
 
 pre {
   background-color: #eee;
@@ -83,4 +87,13 @@ a.btn {
 
 .title {
   margin: 20px 0;
+}
+
+code {
+  background: lightgray;
+}
+
+.all-options {
+  height: 500px;
+  overflow: scroll;
 }

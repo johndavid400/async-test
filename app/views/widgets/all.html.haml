@@ -1,0 +1,11 @@
+.form-group
+  %h3= "All possible combinations (#{Widget.test.count - 1}):"
+  (don't worry, this is generated)
+  .form-group
+    = link_to 'Go Back', widgets_path
+  %hr
+  - Widget.test.each do |s|
+    - unless s == "0 = "
+      .form-group
+        = s
+
