@@ -1,4 +1,13 @@
 %h1 Multi-Enum
+Storing a collection of items as a single integer (with no join tables).
+The Widget table below has only
+%code id:integer
+,
+%code name:string
+,
+and
+%code option_id:integer
+columns.
 
 %hr
 
@@ -6,7 +15,7 @@
 
 = render 'widgets'
 
-%table
+%table#widgets
   %thead
     %tr
       %th Name
@@ -19,9 +28,9 @@
 
 %br
 
-= link_to 'New Widget', new_widget_path
-
-%hr{style: 'margin: 50px 0;'}
+= link_to 'New Widget', new_widget_path, class: "button new"
+%hr
+= link_to "More Details..", "#", id: 'show-info', class: "button"
 
 .form-group
   = render 'info'

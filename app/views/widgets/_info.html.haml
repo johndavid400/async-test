@@ -1,33 +1,37 @@
 
-= link_to "More Details..", "#", id: 'show-info' 
-
 :javascript
   document.getElementById('show-info').addEventListener('click', function(e){
     e.preventDefault();
     let el = document.getElementById('info');
     if (el.style.display == 'block') {
       el.style.display = 'none';
+      this.textContent = 'More Details..';
     }
     else {
       el.style.display = 'block';
+      this.textContent = 'Nevermind, less details';
     }
   });
 
 .info{id: 'info', style: 'display: none;'}
   .form-group
-    %h2 What is this?
     %div= image_tag('https://media.giphy.com/media/Vy9bLZxNutIlLuNXOZ/giphy.gif')
+    %h2 What is this?
   .form-group
-    This model only has 2 fields:
+    This model only has 3 fields:
+    %code id:integer
+    ,
     %code name:string
     and
     %code option_id:integer
     , but can save a collection of options (multi-select) stored as a single integer.
+  .form-group
+    There are no join tables or array columns, just an integer column and a model concern.
 
   %hr
   .form-group
-    %h2 Why?
     %div= image_tag('https://media.giphy.com/media/X4YqmJEl6wJoY/giphy.gif')
+    %h2 Why?
   .form-group
     Imagine the simplicity of the
     = link_to 'Rails enum', 'https://api.rubyonrails.org/v5.2.4.4/classes/ActiveRecord/Enum.html', target: '_blank'
@@ -47,8 +51,8 @@
 
   %hr
   .form-group
-    %h2 How?
     %div= image_tag('https://media.giphy.com/media/10yIEN8cMn4i9W/giphy-downsized.gif')
+    %h2 How?
   .form-group
     %div
       I got the idea while thinking about
@@ -68,8 +72,8 @@
 
   %hr
   .form-group
-    %h2 Disclaimer:
     %div= image_tag('https://media.giphy.com/media/l0Iy8N8khDX5AElgI/giphy-downsized.gif')
+    %h2 Disclaimer:
   .form-group
     This is merely a proof of concept.
     %div There are likely reasons why you wouldn't want to do this on a production app and I haven't thought through all the pros/cons, but it was such a neat idea and I wanted to play with it.

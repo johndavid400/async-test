@@ -1,4 +1,4 @@
 .title
-  = link_to "View All", widgets_path, remote: true, :'data-no-turbolink' => true
+  = link_to "View All", widgets_path, remote: true, :'data-no-turbolink' => true, class: 'button'
   - Widget.options_hash.each do |key, value|
-    = link_to "#{key.to_s.titleize} (#{value})", widgets_path(search: key), remote: true, :'data-no-turbolink' => true
+    = link_to "#{key.to_s.titleize} (#{value})", widgets_path(search: key), remote: true, :'data-no-turbolink' => true, class: 'button'
